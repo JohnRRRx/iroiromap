@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import {APIProvider, Map, useMap, AdvancedMarker, Pin, useMapsLibrary,} from "@vis.gl/react-google-maps";
 import { SearchBar } from "../components/SearchBar";
-import { PlaceListWebComponent } from "../components/PlaceListWebComponent";
+import { PlaceSearchWebComponent } from "../components/PlaceSearchWebComponent";
 import { PlaceDetailsMarker } from "../components/PlaceDetailsMarker";
 import { Circle } from "../components/Circle";
 import "./App.css";
@@ -92,7 +92,7 @@ const MAP_CONFIG = {
         </Map>
       </div>
         <div className="place-list-wrapper">
-          <PlaceListWebComponent
+          <PlaceSearchWebComponent
             placeType={placeType}
             locationId={locationId}
             setPlaces={setPlaces}
