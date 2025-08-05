@@ -7,7 +7,7 @@ import {
   useMap
 } from '@vis.gl/react-google-maps';
 
-import type {DetailsSize} from '../src/App';
+import type {DetailsSize} from '../src/app';
 
 interface PlaceDetailsMarkerProps {
   place: google.maps.places.Place;
@@ -20,46 +20,28 @@ export const PlaceDetailsMarker = memo(
   ({place, selected, onClick, detailsSize}: PlaceDetailsMarkerProps) => {
     const [markerRef, marker] = useAdvancedMarkerRef();
 
-    // Load required Google Maps libraries for places and elevation data
+    // Load required Google Maps library for places
     useMapsLibrary('places');
-    useMapsLibrary('elevation');
+
     const map = useMap();
 
+    // Handle marker click to select this place
     const handleMarkerClick = useCallback(() => {
       onClick(place.id);
+      if (place.location && map) {
+        const pos = place.location.toJSON();
+        map.setCenter({ lat: pos.lat, lng: pos.lng });
 
-  if (place.location && map) {
-    const pos = place.location.toJSON();
-    map.setCenter({ lat: pos.lat, lng: pos.lng });
+        const mapDiv = map.getDiv();
+        const height = mapDiv.clientHeight;
+        map.panBy(0, -height / 3);
+      }
+    }, [onClick, place.id, place.location, map]);
 
-    const mapDiv = map.getDiv();
-    const height = mapDiv.clientHeight;
-    map.panBy(0, -height / 3);
-  }
-}, [onClick, place.id, place.location, map]);
-    // // Handle marker click to select this place
-
-    // // Handle info window close by deselecting this place
+    // Handle info window close by deselecting this place
     const handleCloseClick = useCallback(() => {
       onClick(null);
     }, [onClick]);
-
-    // Configure the elevation element with the place's geographic coordinates
-    const handleElevationRef = useCallback(
-      (elevationElement: any) => {
-        if (!elevationElement) return;
-
-        try {
-          const {lat, lng} = place.location?.toJSON() ?? {};
-
-          // Set a path with a single point to show elevation for this location
-          elevationElement.path = [{lat, lng}];
-        } catch (error) {
-          console.error('Error setting elevation path:', error);
-        }
-      },
-      [place.location]
-    );
 
     return (
       <>
@@ -97,13 +79,6 @@ export const PlaceDetailsMarker = memo(
                 <gmp-place-all-content></gmp-place-all-content>
               </gmp-place-details-compact>
             )}
-
-            <br />
-            {/* 
-              gmp-elevation is a Google Maps Web Component that displays elevation information
-              for a geographic location. The unit-system attribute controls the display units.
-            */}
-            <gmp-elevation ref={handleElevationRef} unit-system="metric" />
           </InfoWindow>
         )}
       </>
@@ -114,12 +89,6 @@ export const PlaceDetailsMarker = memo(
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
-      'gmp-elevation': React.DetailedHTMLProps<
-        // @ts-expect-error ElevationElement not in types yet
-        React.HTMLAttributes<google.maps.places.ElevationElement>,
-        // @ts-expect-error ElevationElement not in types yet
-        google.maps.places.ElevationElement
-      >;
       'gmp-place-details': React.DetailedHTMLProps<
         // @ts-expect-error PlaceDetailsElement not in types yet
         React.HTMLAttributes<google.maps.places.PlaceDetailsElement> & {
