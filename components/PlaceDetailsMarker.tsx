@@ -7,7 +7,7 @@ import {
   useMap
 } from '@vis.gl/react-google-maps';
 
-import type {DetailsSize} from '../src/app';
+import type {DetailsSize} from '../src/App';
 
 interface PlaceDetailsMarkerProps {
   place: google.maps.places.Place;
