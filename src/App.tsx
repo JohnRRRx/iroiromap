@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useMemo } from "react";
-import {APIProvider, Map, useMap, AdvancedMarker, Pin, useMapsLibrary,} from "@vis.gl/react-google-maps";
+import { useState, useMemo } from "react";
+import {APIProvider, Map, AdvancedMarker, Pin} from "@vis.gl/react-google-maps";
 import { SearchBar } from "../components/SearchBar";
 import { PlaceSearchWebComponent } from "../components/PlaceSearchWebComponent";
 import { PlaceDetailsMarker } from "../components/PlaceDetailsMarker";
