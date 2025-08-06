@@ -20,8 +20,7 @@ Google Maps APIとReactの学習の一環として開発しました。
 
 |  | 技術 |
 |:-----------:|:------------:|
-|Setup|Vite|
-|Frontend| React, JavaScript, HTML, CSS |
-|Hosting| netlify |
+|Frontend| JavaScript, React, HTML, CSS, Vite|
+|Hosting| Netlify |
 |Version Control| GitHub |
 |Web API| Google Maps JavaScript API |  
